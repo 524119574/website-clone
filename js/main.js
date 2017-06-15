@@ -76,8 +76,33 @@ var changeElementWhenSeen = function(element, cb) {
   }
 };
 
+var changeNavTitle = function(element, navtitle) {
+  if (typeof element === "string" && typeof navtitle === "string") {
+    var top_of_element = $(element).offset().top;
+    var bottom_of_element = $(element).offset().top + $(element).outerHeight();
+    var bottom_of_screen = $(window).scrollTop() + $(window).height();
+    var top_of_screen = $(window).scrollTop();
+
+    if((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
+        // The element is visible, do something
+        $(navtitle).css("color", "#f06446");
+    }else {
+        $(navtitle).css("color", "black");
+    }
+  }
+};
+
+
 var signature = function() {
   var date = new Date();
   var currentYear = date.getFullYear();
   $("footer span").text("Leonard Ge " + currentYear)
-}
+};
+// smooth scrolling
+var $root = $('html, body');
+$('a').click(function() {
+    $root.animate({
+        scrollTop: $( $.attr(this, 'href') ).offset().top
+    }, 500);
+    return false;
+});
